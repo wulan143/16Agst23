@@ -1,0 +1,46 @@
+{% extends 'dosen/berandadosen.html' %}
+
+{% block content %}
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Data Form Pengecekan</h6>
+  </div>
+  <div class="card-body">
+    <!-- <div class="table-responsive"> -->
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+        <th scope="col">Nama Mata Kuliah</th>
+        <th scope="col">Nama LAB</th>
+        <th scope="col">Nomor PC</th>
+        <th scope="col">Komponen</th>
+        <th scope="col">Keterangan</th>
+        <th scope="col">Deskripsi</th>
+        <th scope="col">Tanggal Pengecekan</th>
+      <tbody>
+        {% for cek in cek%}
+        <tr>
+          <td>{{ cek.matkul.nama_mk }}</td>
+          <td>{{ cek.lab.nama_lab }}</td>
+          <td>{{ cek.pc.nomor_pc }}</td>
+          <td>
+            {% for item in cek.items.all %}
+            {{ item.name }}<br>
+            {% endfor %}
+          </td>
+          <td>{{ cek.keterangan }}</td>
+          <td>{{ cek.deskripsi }}</td>
+          <td>{{ cek.created_at }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      </tr>
+      </thead>
+      </tr>
+    </table>
+  </div>
+
+  <button onclick="window.print()">Print Laporan</button>
+
+</div>
+
+{% endblock content %}

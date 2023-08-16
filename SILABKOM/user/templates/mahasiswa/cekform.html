@@ -1,0 +1,226 @@
+{% extends 'beranda.html' %}
+
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-1">
+  
+</div>
+<h4 class="text-gray-800 mb-3 mt-3 text-center">FORM PENGECEKAN</h4>
+<div class="form">
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+          <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+          <body>
+            <div class="container">
+                <div class="left-column">
+                    <label for="semester">Pilih Semester:</label>
+                    <select id="semester" onchange="showMataKuliah()">
+                        <option value="" disabled selected>Pilih Semester</option>
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                    </select>
+                    <br>
+                    <label for="mataKuliah">Pilih Mata Kuliah:</label>
+                    <select id="mataKuliah" onchange="showPertemuan()">
+                        <option value="" disabled selected>Pilih Mata Kuliah</option>
+                    </select>
+                    <br>
+                    <label for="pertemuan">Pilih Pertemuan:</label>
+                    <select id="pertemuan">
+                        <option value="" disabled selected>Pilih Pertemuan</option>
+                    </select>
+                </div>
+            </div>
+            <script>
+                // Mendapatkan elemen-elemen yang diperlukan
+                var semesterDropdown = document.getElementById("semester");
+                var mataKuliahDropdown = document.getElementById("mataKuliah");
+                var pertemuanDropdown = document.getElementById("pertemuan");
+        
+                // Menambahkan event listener saat pengguna memilih semester
+                semesterDropdown.addEventListener("change", function () {
+                    var selectedSemesterValue = semesterDropdown.value;
+        
+                    // Menghapus mata kuliah sebelumnya
+                    while (mataKuliahDropdown.firstChild) {
+                        mataKuliahDropdown.firstChild.remove();
+                    }
+        
+                    // Menambahkan mata kuliah sesuai dengan semester yang dipilih
+                    if (selectedSemesterValue === "1") {
+                        var mataKuliah1 = document.createElement("option");
+                        mataKuliah1.value = "mk1";
+                        mataKuliah1.textContent = "Pemrograman Dasar 1";
+        
+                        var mataKuliah2 = document.createElement("option");
+                        mataKuliah2.value = "mk2";
+                        mataKuliah2.textContent = "PTIK";
+        
+                        var mataKuliah3 = document.createElement("option");
+                        mataKuliah3.value = "mk3";
+                        mataKuliah3.textContent = "Bahasa Inggris";
+        
+                        mataKuliahDropdown.appendChild(mataKuliah1);
+                        mataKuliahDropdown.appendChild(mataKuliah2);
+                        mataKuliahDropdown.appendChild(mataKuliah3);
+                    } else if (selectedSemesterValue === "2") {
+                        var mataKuliah1 = document.createElement("option");
+                        mataKuliah1.value = "mk1";
+                        mataKuliah1.textContent = "Matematika Terapan";
+        
+                        var mataKuliah2 = document.createElement("option");
+                        mataKuliah2.value = "mk2";
+                        mataKuliah2.textContent = "Komunikasi Teknis";
+        
+                        var mataKuliah3 = document.createElement("option");
+                        mataKuliah3.value = "mk3";
+                        mataKuliah3.textContent = "Pemrograman 2";
+        
+                        mataKuliahDropdown.appendChild(mataKuliah1);
+                        mataKuliahDropdown.appendChild(mataKuliah2);
+                        mataKuliahDropdown.appendChild(mataKuliah3);
+                    }
+        
+                    // Menghapus mata kuliah terpilih sebelumnya
+                    pertemuanDropdown.innerHTML = '<option value="" disabled selected>Pilih Pertemuan</option>';
+                });
+        
+                // Menambahkan event listener saat pengguna memilih mata kuliah
+                mataKuliahDropdown.addEventListener("change", function () {
+                    var selectedMataKuliahValue = mataKuliahDropdown.value;
+        
+                    // Menambahkan pilihan pertemuan berdasarkan mata kuliah yang dipilih
+                    if (selectedMataKuliahValue === "mk1") {
+                        pertemuanDropdown.innerHTML = `
+                            <option value="" disabled selected>Pilih Pertemuan</option>
+                            <option value="pertemuan1">Pertemuan 1</option>
+                            <option value="pertemuan2">Pertemuan 2</option>
+                            <option value="pertemuan3">Pertemuan 3</option>
+                        `;
+                    } else if (selectedMataKuliahValue === "mk2") {
+                        pertemuanDropdown.innerHTML = `
+                            <option value="" disabled selected>Pilih Pertemuan</option>
+                            <option value="pertemuan1">Pertemuan 1</option>
+                            <option value="pertemuan2">Pertemuan 2</option>
+                            <option value="pertemuan3">Pertemuan 3</option>
+                            <option value="pertemuan4">Pertemuan 4</option>
+                        `;
+                    } else if (selectedMataKuliahValue === "mk3") {
+                        pertemuanDropdown.innerHTML = `
+                            <option value="" disabled selected>Pilih Pertemuan</option>
+                            <option value="pertemuan1">Pertemuan 1</option>
+                            <option value="pertemuan2">Pertemuan 2</option>
+                        `;
+                    } else {
+                        pertemuanDropdown.innerHTML = '<option value="" disabled selected>Pilih Pertemuan</option>';
+                    }
+                });
+            </script>
+        </body>
+<!--         
+      <label for="nama_mk" class="form-label">Nama Mata Kuliah</label>
+      <select class="form-control" id="nama_mk" name="nama_mk">
+        {% for matkul in matkuls %}
+        <option value="{{ matkul.id_mk }}">{{ matkul.nama_mk }}</option>
+        {% endfor %}
+      </select> -->
+    </div>
+    <div class="mb-3">
+      <label for="nama_lab" class="form-label">Nama Lab</label>
+      <select class="form-control" id="nama_lab" name="nama_lab">
+        {% for lab in labs %}
+        <option value="{{ lab.id_lab }}">{{ lab.nama_lab }}</option>
+        {% endfor %}
+      </select>
+    </div>  
+    <div class="mb-3">
+      <label for="no_pc" class="form-label">Nomor PC</label>
+      <select class="form-control" id="no_pc" name="no_pc">
+        {% for pc in pcs %}
+        <option value="{{ pc.id_pc }}">{{ pc.nomor_pc }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% for item in items %}
+    <div class="form-check">
+      
+      <input class="form-check-input" type="checkbox" value="{{ item.id }}" name="items" id="item{{ item.id }}">
+      <label class="form-check-label" for="item{{ item.id }}">
+        {{ item.name }}
+        <div class="mb-3 mt-3">
+          <label for="keterangan" class="form-label">Keterangan</label>
+          <select class="form-select" aria-label="Default select example" id="keterangan" name="keterangan">
+            <option selected>Rusak</option>
+            <option value="Tidak Rusak">Tidak Rusak</option>
+            <option value="Hilang">Hilang</option>
+          </select>
+        </div>
+      </label>
+    </div>
+    {% endfor %}
+   
+    <div class="mb-3">
+      <label for="deskripsi" class="form-label">Deskripsi</label>
+      <textarea class="form-control" placeholder="Masukkan Deskripsi disini" id="deskripsi" name="deskripsi"
+        style="height: 100px"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-bottom: 70px;">Submit</button>
+  </form>
+</div>
+    <style>
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container h1 {
+            text-align: center;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="email"],
+        .form-container select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid hsl(239, 98%, 42%);
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Formulir Presensi Mahasiswa</h1>
+        <form>
+          <label for="kehadiran">Kehadiran:</label>
+            <button type="submit">HADIR</button>
+        </form>
+    </div>
+</body>
+</html>
+
+{% endblock content %}

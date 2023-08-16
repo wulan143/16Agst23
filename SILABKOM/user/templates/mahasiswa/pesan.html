@@ -1,0 +1,22 @@
+{% extends 'beranda.html'%}
+
+{% block content%}
+<div class="card text-center" style="margin-bottom: 150px; margin-top:150px;">
+  <div class="card-header bg-primary text-white fs-5">
+  </div>
+  <div class="card-body">
+    <h2 class="card-title">Informasi !!</h2>
+    <p class="card-text">Laporan Pengecekan Anda Berhasil Terkirim <br>Silahkan jika ingin menambahkan laporan
+      pengecekan bisa klik tombol dibawah</p>
+    <a href="{%url 'pengecekan'%}" class="btn btn-primary">Pengecekan</a>
+  </div>
+  <div class="card-footer text-muted bg-primary">
+  </div>
+</div>
+<script>
+  setTimeout(function() {
+    window.location.href = "{% url 'pengecekan' %}";
+  }, 10000); // 10 detik
+</script>
+
+{% endblock content%}
